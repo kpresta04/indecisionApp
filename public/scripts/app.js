@@ -19,6 +19,7 @@ var IndecisionAPP = function (_React$Component) {
     _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
     _this.handlePick = _this.handlePick.bind(_this);
     _this.handleAddOption = _this.handleAddOption.bind(_this);
+    _this.handleDeleteOption = _this.handleDeleteOption.bind(_this);
     _this.state = {
       options: props.options
     };
@@ -36,6 +37,17 @@ var IndecisionAPP = function (_React$Component) {
       this.setState(function (prevState) {
         return {
           options: prevState.options.concat([option])
+        };
+      });
+    }
+  }, {
+    key: "handleDeleteOption",
+    value: function handleDeleteOption(option) {
+      this.setState(function (prevState) {
+        return {
+          options: prevState.options.filter(function (el) {
+            return el !== option;
+          })
         };
       });
     }
@@ -67,6 +79,7 @@ var IndecisionAPP = function (_React$Component) {
         }),
         React.createElement(Options, {
           handleDeleteOptions: this.handleDeleteOptions,
+          handleDeleteOption: this.handleDeleteOption,
           options: this.state.options
         }),
         React.createElement(AddOption, { handleAddOption: this.handleAddOption })
@@ -195,9 +208,20 @@ var AddOption = function (_React$Component2) {
 var Option = function Option(props) {
   return props.options.map(function (el, i) {
     return React.createElement(
-      "li",
-      { key: i },
-      el
+      "div",
+      { key: Math.random() },
+      React.createElement(
+        "li",
+        { key: i },
+        el,
+        React.createElement(
+          "button",
+          { key: el, onClick: function onClick() {
+              return props.handleDeleteOption(el);
+            } },
+          "Remove"
+        )
+      )
     );
   });
 };
@@ -215,7 +239,10 @@ var Options = function Options(props) {
     React.createElement(
       "ol",
       null,
-      React.createElement(Option, { options: props.options })
+      React.createElement(Option, {
+        handleDeleteOption: props.handleDeleteOption,
+        options: props.options
+      })
     ),
     React.createElement(
       "button",
