@@ -9,6 +9,27 @@ class IndecisionAPP extends React.Component {
       options: props.options
     };
   }
+  componentDidMount() {
+    try {
+      const json = localStorage.getItem("options");
+      const options = JSON.parse(json);
+      if (options) {
+        this.setState(() => ({ options }));
+      }
+    } catch (e) {
+      //if invalid JSON, do nothing
+    }
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.options.length !== this.state.options.length) {
+      const json = JSON.stringify(this.state.options);
+      console.log("saving data");
+      localStorage.setItem("options", json);
+    }
+  }
+  componentWillUnmount() {
+    console.log("component will unmount");
+  }
   handleAddOption(option) {
     if (!option) {
       return "Enter valid value to add item";
@@ -108,12 +129,14 @@ class AddOption extends React.Component {
     e.preventDefault();
     // console.log(e.target.elements[0].value);
     const text = e.target.elements[0].value.trim();
-    document.querySelector("#addOptionText").value = "";
     const error = this.props.handleAddOption(text);
 
     this.setState(() => ({
       error
     }));
+    if (!error) {
+      document.querySelector("#addOptionText").value = "";
+    }
   }
   render() {
     return (
@@ -149,6 +172,9 @@ const Option = props =>
 const Options = props => {
   return (
     <div>
+      {props.options.length === 0 && (
+        <p>Please add an option to get started!</p>
+      )}
       <ol>
         <Option
           handleDeleteOption={props.handleDeleteOption}

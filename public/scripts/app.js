@@ -27,6 +27,35 @@ var IndecisionAPP = function (_React$Component) {
   }
 
   _createClass(IndecisionAPP, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      try {
+        var json = localStorage.getItem("options");
+        var options = JSON.parse(json);
+        if (options) {
+          this.setState(function () {
+            return { options: options };
+          });
+        }
+      } catch (e) {
+        //if invalid JSON, do nothing
+      }
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (prevState.options.length !== this.state.options.length) {
+        var json = JSON.stringify(this.state.options);
+        console.log("saving data");
+        localStorage.setItem("options", json);
+      }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      console.log("component will unmount");
+    }
+  }, {
     key: "handleAddOption",
     value: function handleAddOption(option) {
       if (!option) {
@@ -168,7 +197,6 @@ var AddOption = function (_React$Component2) {
       e.preventDefault();
       // console.log(e.target.elements[0].value);
       var text = e.target.elements[0].value.trim();
-      document.querySelector("#addOptionText").value = "";
       var error = this.props.handleAddOption(text);
 
       this.setState(function () {
@@ -176,6 +204,9 @@ var AddOption = function (_React$Component2) {
           error: error
         };
       });
+      if (!error) {
+        document.querySelector("#addOptionText").value = "";
+      }
     }
   }, {
     key: "render",
@@ -236,6 +267,11 @@ var Options = function Options(props) {
   return React.createElement(
     "div",
     null,
+    props.options.length === 0 && React.createElement(
+      "p",
+      null,
+      "Please add an option to get started!"
+    ),
     React.createElement(
       "ol",
       null,
