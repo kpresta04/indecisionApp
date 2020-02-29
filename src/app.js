@@ -1,8 +1,8 @@
 // import "./utils.js";
+// import validator from "validator";
+import React from "react";
+import ReactDOM from "react-dom";
 
-import { add } from "./utils.js";
-import { isAdult, canDrink } from "./person.js";
+const template = <p>Testing123</p>;
 
-// console.log(add(2, 3));
-console.log(isAdult(17));
-console.log(canDrink(20));
+ReactDOM.render(template, document.querySelector("#app"));
