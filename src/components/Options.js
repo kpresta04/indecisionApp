@@ -10,7 +10,9 @@ const Options = props => (
         options={props.options}
       />
     </ol>
-    <button onClick={props.handleDeleteOptions}>Remove All</button>
+    <button className="button button-link" onClick={props.handleDeleteOptions}>
+      Remove All
+    </button>
   </div>
 );
 

@@ -5,7 +5,11 @@ const Option = props =>
     <div key={Math.random()}>
       <li key={i}>
         {el}
-        <button key={el} onClick={() => props.handleDeleteOption(el)}>
+        <button
+          className="button button-link"
+          key={el}
+          onClick={() => props.handleDeleteOption(el)}
+        >
           Remove
         </button>
       </li>
