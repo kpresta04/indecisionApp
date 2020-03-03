@@ -8,6 +8,7 @@
 .addOp form {
   display: flex;
   padding: $m-size;
+  flex-direction: column;
 }
 .addOp input {
   flex-grow: 1;
@@ -15,6 +16,15 @@
   color: $off-white;
   border: none;
   border-bottom: 0.3rem solid darken($dark-blue, 10%);
-  margin-right: $s-size;
+  margin: 0 0 $s-size 0;
   padding: $s-size;
+}
+
+@media (min-width: 45rem) {
+  .addOp form {
+    flex-direction: row;
+  }
+  .addOp input {
+    margin-right: $s-size;
+  }
 }
