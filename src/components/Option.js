@@ -2,7 +2,7 @@ import React from "react";
 
 const Option = props =>
   props.options.map((el, i) => (
-    <div key={Math.random()}>
+    <div key={Math.random()} className="option">
       <li key={i}>
         {el}
         <button
